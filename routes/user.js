@@ -5,18 +5,14 @@ const {
   getUserById,
   getUser,
   updateUser,
-  removeUser,
-  createUser
+  removeUser
 } = require("../controllers/user");
+const { isSignedIn, isAuthenticated } = require("../controllers/auth");
 
 router.param("userId", getUserById);
 
-router.get("/user/:userId", getUser);
-router.post("/user",createUser)
-router.put("/user/:userId", updateUser);
-
-router.delete("/user/:userId", removeUser);
-
-
+router.get("/user/:userId", isSignedIn, isAuthenticated, getUser);
+router.put("/user/:userId", isSignedIn, isAuthenticated, updateUser);
+router.delete('/user/:userId', isSignedIn, isAuthenticated, removeUser);
 
 module.exports = router;
